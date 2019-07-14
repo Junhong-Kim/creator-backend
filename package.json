@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/http-errors": "^1.6.1",
     "connect-redis": "^3.4.1",
     "express": "^4.17.1",
-    "express-session": "^1.16.2"
+    "express-session": "^1.16.2",
+    "http-errors": "^1.7.3"
   },
   "devDependencies": {
     "@types/connect-redis": "0.0.10",

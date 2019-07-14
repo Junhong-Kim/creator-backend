@@ -1,4 +1,5 @@
-import express from "express";
+import createError from "http-errors";
+import express, { NextFunction, Request, Response }  from "express";
 import routes from "./routes";
 import session from "express-session";
 import connectRedis from "connect-redis";
@@ -24,5 +25,14 @@ app.use(session({
 
 app.set("port", process.env.PORT || 3000);
 app.use("/", routes);
+
+app.use(function(req: Request, res: Response, next: NextFunction) {
+  next(createError(404));
+});
+
+app.use(function(err: Error, req: Request, res: Response, next: NextFunction) {
+  console.error(err.stack);
+  res.status(500).send(err);
+});
 
 export default app;

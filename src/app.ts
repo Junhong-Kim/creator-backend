@@ -1,11 +1,14 @@
 import createError from "http-errors";
 import express, { NextFunction, Request, Response }  from "express";
+import logger from "morgan";
 import routes from "./routes";
 import session from "express-session";
 import connectRedis from "connect-redis";
 const RedisStore = connectRedis(session);
 
 const app = express();
+
+app.use(logger("dev"));
 
 app.use(session({
   secret: "keyboard cat",

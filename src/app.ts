@@ -1,8 +1,8 @@
+import authRouter from "./routes/auth";
 import bodyParser from "body-parser";
 import createError from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import logger from "morgan";
-import routes from "./routes";
 import session from "express-session";
 import passport from "passport";
 import passportLocal from "passport-local";
@@ -74,14 +74,7 @@ passport.use(new LocalStrategy(
 
 // routes
 app.set("port", process.env.PORT || 3000);
-app.use("/", routes);
-
-app.post("/api/auth/login",
-  passport.authenticate("local", {
-    successRedirect: "/api/auth/login_status",
-    failureRedirect: "/api/auth/logout"
-  })
-);
+app.use("/api/auth", authRouter(passport));
 
 // error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {

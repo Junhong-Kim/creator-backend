@@ -6,13 +6,16 @@ import logger from "morgan";
 import session from "express-session";
 import passport from "passport";
 import passportLocal from "passport-local";
+import passportGoogle from "passport-google-oauth";
+import google from "./config/google.json";
 import connectRedis from "connect-redis";
 const RedisStore = connectRedis(session);
 const LocalStrategy = passportLocal.Strategy;
+const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
 const app = express();
 
-// middleware
+// * middleware
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -54,6 +57,7 @@ passport.deserializeUser(function(id: number, done) {
   done(undefined, User);
 });
 
+// * Local Strategy
 passport.use(new LocalStrategy(
   {
     usernameField: "username",
@@ -72,11 +76,26 @@ passport.use(new LocalStrategy(
   })
 );
 
-// routes
+// * Google Strategy
+passport.use(new GoogleStrategy(
+  {
+    clientID: google.web.client_id,
+    clientSecret: google.web.client_secret,
+    callbackURL: google.web.redirect_uris[0]
+  },
+  function(accessToken, refreshToken, profile, done) {
+    const username = profile.emails[0].value;
+    const googleId = profile.id;
+    const user = { username, googleId };
+    return done(undefined, user);
+  })
+);
+
+// * routes
 app.set("port", process.env.PORT || 3000);
 app.use("/api/auth", authRouter(passport));
 
-// error handler
+// * error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });

@@ -9,11 +9,14 @@ import passportLocal from "passport-local";
 import passportGoogle from "passport-google-oauth";
 import google from "./config/google.json";
 import connectRedis from "connect-redis";
+import models from "./models";
 const RedisStore = connectRedis(session);
 const LocalStrategy = passportLocal.Strategy;
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
+const sequelize = models.sequelize;
 
 const app = express();
+sequelize.sync({ force: true });
 
 // * middleware
 app.use(logger("dev"));
@@ -25,13 +28,13 @@ app.use(session({
   saveUninitialized: true,
   store: new RedisStore({
     host: "127.0.0.1",
-    port: 6379
+    port: 6379,
   }),
   cookie: {
     path: "/",
     httpOnly: true,
     secure: false,
-    maxAge: 1000 * 60 * 60 * 1
+    maxAge: 1000 * 60 * 60 * 1,
   }
 }));
 app.use(passport.initialize());
@@ -44,7 +47,7 @@ interface IUser {
 
 const User: IUser = {
   username: "test",
-  password: "test"
+  password: "test",
 };
 
 passport.serializeUser(function(user: IUser, done) {

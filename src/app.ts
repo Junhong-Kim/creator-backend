@@ -4,6 +4,7 @@ import createError from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import logger from "morgan";
 import session from "express-session";
+import path from "path";
 import passport from "passport";
 import passportLocal from "passport-local";
 import passportGoogle from "passport-google-oauth";
@@ -39,6 +40,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, "../static")));
 
 interface IUser {
   username: string;
@@ -96,6 +98,9 @@ passport.use(new GoogleStrategy(
 
 // * routes
 app.set("port", process.env.PORT || 3000);
+app.get("/", function(req: Request, res: Response, next: NextFunction) {
+  res.sendFile(path.join(__dirname, "../static", "index.hmtl"));
+});
 app.use("/api/auth", authRouter(passport));
 
 // * error handler

@@ -61,7 +61,10 @@ passport.serializeUser(function(user: IUser, done) {
 
 passport.deserializeUser(function(id: number, done) {
   // 두 번째 인자가 request 객체의 user로 전달됨
-  done(undefined, id);
+  db.findOne(models.User, { id: id })
+    .then((user: IUser) => {
+      done(undefined, user);
+    });
 });
 
 // * Local Strategy

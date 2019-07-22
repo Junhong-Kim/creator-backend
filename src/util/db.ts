@@ -1,8 +1,14 @@
-export function findOrCreate(Model: any, condition: any, data: any) {
+export function findOrCreate(Model: any, condition: Object, data: Object) {
   return Model.findOrCreate({
     where: condition,
     defaults: data,
-  }).spread((instance: any, created: any) => {
+  }).spread((instance: any, created: boolean) => {
     return instance;
+  });
+}
+
+export function findOne(Model: any, condition: Object) {
+  return Model.findOne({
+    where: condition,
   });
 }

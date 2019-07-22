@@ -24,7 +24,7 @@ export default function(passport: passport.PassportStatic) {
       failureRedirect: "/api/auth/logout"
     }),
     function (req: express.Request, res: express.Response) {
-      res.redirect("/", 301);
+      res.redirect(301, "/");
     }
   );
   router.get("/login_status/", authController.loginStatus);

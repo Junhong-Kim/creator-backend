@@ -6,13 +6,15 @@ import logger from "morgan";
 import session from "express-session";
 import path from "path";
 import passport from "passport";
-import passportLocal from "passport-local";
+// import passportLocal from "passport-local";
 import passportGoogle from "passport-google-oauth";
 import google from "./config/google.json";
 import connectRedis from "connect-redis";
 import models from "./models";
+import * as db from "./util/db";
+
 const RedisStore = connectRedis(session);
-const LocalStrategy = passportLocal.Strategy;
+// const LocalStrategy = passportLocal.Strategy;
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 const sequelize = models.sequelize;
 
@@ -43,43 +45,43 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "../static")));
 
 interface IUser {
-  username: string;
-  password: string;
+  id: number;
+  displayName: string;
+  picture: string;
+  email: string;
+  googleId: string;
+  createdAt: string;
+  updatedAt: string;
 }
-
-const User: IUser = {
-  username: "test",
-  password: "test",
-};
 
 passport.serializeUser(function(user: IUser, done) {
   // 로그인 성공시 호출됨, 두 번째 인자는 식별자
-  done(undefined, user.username);
+  done(undefined, user.id);
 });
 
 passport.deserializeUser(function(id: number, done) {
   // 두 번째 인자가 request 객체의 user로 전달됨
-  done(undefined, User);
+  done(undefined, id);
 });
 
 // * Local Strategy
-passport.use(new LocalStrategy(
-  {
-    usernameField: "username",
-    passwordField: "password",
-  },
-  function(username: string, password: string, done) {
-    if (username === User.username) {
-      if (password === User.password) {
-        return done(undefined, User);
-      } else {
-        return done(undefined, false, { message: "incorrect password" });
-      }
-    } else {
-      return done(undefined, false, { message: "invalid username" });
-    }
-  })
-);
+// passport.use(new LocalStrategy(
+//   {
+//     usernameField: "username",
+//     passwordField: "password",
+//   },
+//   function(username: string, password: string, done) {
+//     if (username === User.username) {
+//       if (password === User.password) {
+//         return done(undefined, User);
+//       } else {
+//         return done(undefined, false, { message: "incorrect password" });
+//       }
+//     } else {
+//       return done(undefined, false, { message: "invalid username" });
+//     }
+//   })
+// );
 
 // * Google Strategy
 passport.use(new GoogleStrategy(
@@ -88,11 +90,19 @@ passport.use(new GoogleStrategy(
     clientSecret: google.web.client_secret,
     callbackURL: google.web.redirect_uris[0]
   },
-  function(accessToken, refreshToken, profile, done) {
-    const username = profile.emails[0].value;
-    const googleId = profile.id;
-    const user = { username, googleId };
-    return done(undefined, user);
+  async function(accessToken, refreshToken, profile, done) {
+    const condition = {
+      googleId: profile.id
+    };
+
+    const data = {
+      displayName: profile.displayName,
+      email: profile.emails[0].value,
+      picture: profile.photos[0].value,
+    };
+
+    const instance = await db.findOrCreate(models.User, condition, data);
+    return done(undefined, instance.dataValues);
   })
 );
 

@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
   {
     host: dbConfig.host,
     dialect: dbConfig.dialect as Dialect,
+    timezone: "+09:00",
   }
 );
 const db = {} as any;

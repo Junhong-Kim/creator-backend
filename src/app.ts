@@ -3,17 +3,17 @@ import bodyParser from "body-parser";
 import createError from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import logger from "morgan";
-import session from "express-session";
+// import session from "express-session";
 import path from "path";
 import passport from "passport";
 // import passportLocal from "passport-local";
 import passportGoogle from "passport-google-oauth";
 import google from "./config/google.json";
-import connectRedis from "connect-redis";
+// import connectRedis from "connect-redis";
 import models from "./models";
 import * as db from "./util/db";
 
-const RedisStore = connectRedis(session);
+// const RedisStore = connectRedis(session);
 // const LocalStrategy = passportLocal.Strategy;
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 const sequelize = models.sequelize;
@@ -25,23 +25,23 @@ sequelize.sync({ force: true });
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(session({
-  secret: "keyboard cat",
-  resave: false,
-  saveUninitialized: true,
-  store: new RedisStore({
-    host: "127.0.0.1",
-    port: 6379,
-  }),
-  cookie: {
-    path: "/",
-    httpOnly: true,
-    secure: false,
-    maxAge: 1000 * 60 * 60 * 1,
-  }
-}));
+// app.use(session({
+//   secret: "keyboard cat",
+//   resave: false,
+//   saveUninitialized: true,
+//   store: new RedisStore({
+//     host: "127.0.0.1",
+//     port: 6379,
+//   }),
+//   cookie: {
+//     path: "/",
+//     httpOnly: true,
+//     secure: false,
+//     maxAge: 1000 * 60 * 60 * 1,
+//   }
+// }));
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 app.use(express.static(path.join(__dirname, "../static")));
 
 interface IUser {

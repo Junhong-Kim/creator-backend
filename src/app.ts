@@ -10,6 +10,7 @@ import passport from "passport";
 import passportGoogle from "passport-google-oauth";
 import google from "./config/google.json";
 // import connectRedis from "connect-redis";
+import { IUser } from "../src/interfaces";
 import models from "./models";
 import * as db from "./util/db";
 
@@ -43,16 +44,6 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 // app.use(passport.session());
 app.use(express.static(path.join(__dirname, "../static")));
-
-interface IUser {
-  id: number;
-  displayName: string;
-  picture: string;
-  email: string;
-  googleId: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 passport.serializeUser(function(user: IUser, done) {
   // 로그인 성공시 호출됨, 두 번째 인자는 식별자

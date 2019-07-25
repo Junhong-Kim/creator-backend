@@ -14,7 +14,8 @@ export const google = passport.authenticate("google", {
 });
 
 export const googleCallback = passport.authenticate("google", {
-  successRedirect: "/",
+  session: false,
+  // successRedirect: "/",
   failureRedirect: "/api/auth/login_status"
 });
 

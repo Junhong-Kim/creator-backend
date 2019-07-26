@@ -1,4 +1,6 @@
 import authRouter from "./routes/auth";
+import userRouter from "./routes/user";
+import authMiddleware from "./middlewares/auth";
 import bodyParser from "body-parser";
 import createError from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
@@ -106,6 +108,8 @@ app.get("/", function(req: Request, res: Response, next: NextFunction) {
   res.sendFile(path.join(__dirname, "../static", "index.hmtl"));
 });
 app.use("/api/auth", authRouter(passport));
+app.use(authMiddleware);
+app.use("/api/user", userRouter);
 
 // * error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {

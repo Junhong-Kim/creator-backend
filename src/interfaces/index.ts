@@ -7,3 +7,10 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IYouTubeChannel {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+}

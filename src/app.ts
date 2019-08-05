@@ -1,5 +1,6 @@
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
+import youtubeRouter from "./routes/youtube";
 import authMiddleware from "./middlewares/auth";
 import bodyParser from "body-parser";
 import createError from "http-errors";
@@ -110,6 +111,7 @@ app.get("/", function(req: Request, res: Response, next: NextFunction) {
 app.use("/api/auth", authRouter(passport));
 app.use(authMiddleware);
 app.use("/api/user", userRouter);
+app.use("/api/youtube", youtubeRouter);
 
 // * error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {

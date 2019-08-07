@@ -3,6 +3,6 @@ import * as youtubeController from "../controllers/youtube";
 
 const router = Router();
 
-router.get("/", youtubeController.searchChannels);
+router.get("/channels", youtubeController.searchChannels);
 
 export default router;

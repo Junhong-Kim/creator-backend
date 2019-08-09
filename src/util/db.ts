@@ -1,3 +1,7 @@
+export function create(Model: any, data: Object) {
+  return Model.create(data);
+}
+
 export function findOrCreate(Model: any, condition: Object, data: Object) {
   return Model.findOrCreate({
     where: condition,

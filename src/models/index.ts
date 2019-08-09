@@ -1,4 +1,5 @@
 import { Sequelize, Dialect } from "sequelize";
+import channel from "../models/channel";
 import user from "../models/user";
 import userLog from "../models/userLog";
 import config from "../config/config.json";
@@ -20,6 +21,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // * define models
+db.Channel = channel(sequelize, Sequelize);
 db.User = user(sequelize, Sequelize);
 db.UserLog = userLog(sequelize, Sequelize);
 

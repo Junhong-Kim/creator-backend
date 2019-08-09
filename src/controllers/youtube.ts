@@ -2,8 +2,26 @@ import express from "express";
 import secrets from "../config/secrets.json";
 import { IYouTubeChannel } from "../interfaces";
 import YouTube, { Channel } from "simple-youtube-api";
+import models from "../models";
+import * as db from "../util/db";
 
 const youtube = new YouTube(secrets.youtube.secret);
+
+export function registChannel(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const channelId = req.body.channelId;
+
+  db.create(models.Channel, { channelId })
+    .then(() => {
+      res.send({
+        success: true
+      });
+    })
+    .catch(() => {
+      res.send({
+        success: false,
+      });
+    });
+}
 
 export function searchChannels(req: express.Request, res: express.Response, next: express.NextFunction) {
   const keyword = req.query.keyword;

@@ -11,14 +11,16 @@ export function registChannel(req: express.Request, res: express.Response, next:
   const channelId = req.body.channelId;
 
   db.create(models.Channel, { channelId })
-    .then(() => {
+    .then((data: object) => {
       res.send({
-        success: true
+        success: true,
+        data,
       });
     })
     .catch(() => {
-      res.send({
+      res.status(409).send({
         success: false,
+        message: "duplicated channel",
       });
     });
 }

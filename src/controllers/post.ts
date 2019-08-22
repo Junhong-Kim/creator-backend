@@ -1,4 +1,5 @@
 import express from "express";
+import { IPost } from "../interfaces";
 import models from "../models";
 import * as db from "../util/db";
 
@@ -31,4 +32,22 @@ export function list(req: express.Request, res: express.Response, next: express.
         message: err.toString(),
       });
     });
+}
+
+export function detail(req: express.Request, res: express.Response, next: express.NextFunction) {
+  db.findOne(models.Post, {
+    id: req.params.id,
+  })
+  .then((data: IPost) => {
+    if (data) {
+      res.send({
+        success: true,
+        data,
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+      });
+    }
+  });
 }

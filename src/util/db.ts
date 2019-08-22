@@ -1,8 +1,8 @@
-export function create(Model: any, data: Object) {
+export function create(Model: any, data: object) {
   return Model.create(data);
 }
 
-export function findOrCreate(Model: any, condition: Object, data: Object) {
+export function findOrCreate(Model: any, condition: object, data: object) {
   return Model.findOrCreate({
     where: condition,
     defaults: data,
@@ -11,7 +11,7 @@ export function findOrCreate(Model: any, condition: Object, data: Object) {
   });
 }
 
-export function findOne(Model: any, condition: Object) {
+export function findOne(Model: any, condition: object) {
   return Model.findOne({
     where: condition,
   });

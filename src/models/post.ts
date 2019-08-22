@@ -37,7 +37,7 @@ export default function(sequelize: Sequelize, DataTypes: any) {
     isValid: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
   }, {
     tableName: "post",

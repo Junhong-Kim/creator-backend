@@ -14,3 +14,14 @@ export interface IYouTubeChannel {
   description: string;
   thumbnail: string;
 }
+
+export interface IPost {
+  id: number;
+  title: string;
+  contents: string;
+  likeCount: number;
+  dislikeCount: number;
+  createdAt: string;
+  updatedAt: string;
+  isValid: boolean;
+}

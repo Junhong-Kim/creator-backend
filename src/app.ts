@@ -1,4 +1,5 @@
 import authRouter from "./routes/auth";
+import postRouter from "./routes/post";
 import userRouter from "./routes/user";
 import youtubeRouter from "./routes/youtube";
 import authMiddleware from "./middlewares/auth";
@@ -112,6 +113,7 @@ app.use("/api/auth", authRouter(passport));
 app.use("/api/youtube", youtubeRouter);
 app.use(authMiddleware);
 app.use("/api/user", userRouter);
+app.use("/api/posts", postRouter);
 
 // * error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {

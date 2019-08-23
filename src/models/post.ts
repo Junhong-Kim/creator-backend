@@ -12,7 +12,7 @@ export default function(sequelize: Sequelize, DataTypes: any) {
       allowNull: false,
     },
     contents: {
-      type: DataTypes.STRING(255)
+      type: DataTypes.TEXT
     },
     likeCount: {
       type: DataTypes.INTEGER,

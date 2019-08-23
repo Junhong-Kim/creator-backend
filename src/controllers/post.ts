@@ -29,7 +29,7 @@ export async function list(req: express.Request, res: express.Response, next: ex
 }
 
 export function detail(req: express.Request, res: express.Response, next: express.NextFunction) {
-  db.findOne(models.Post, {
+  db.findOneWithJoin(models.Post, models.User, {
     id: req.params.id,
   })
   .then((data: IPost) => {

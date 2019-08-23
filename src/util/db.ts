@@ -17,6 +17,15 @@ export function findOne(Model: any, condition: object) {
   });
 }
 
+export function findOneWithJoin(Model: any, joinModel: any, condition: object) {
+  return Model.findOne({
+    where: condition,
+    include: [
+      joinModel,
+    ],
+  });
+}
+
 export function findAll(Model: any, offset: number, limit: number) {
   return Model.findAll({
     offset: offset,

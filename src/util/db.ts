@@ -20,9 +20,26 @@ export function findOne(Model: any, condition: object) {
 export function findAll(Model: any, offset: number, limit: number) {
   return Model.findAll({
     offset: offset,
-    limit:  limit,
+    limit: limit,
     order: [
-      ["id", "DESC"]
+      ["id", "DESC"],
+    ],
+  }).then((data: object[]) => {
+    return data;
+  }).catch((err: string) => {
+    throw new Error(err);
+  });
+}
+
+export function findAllWithJoin(Model: any, joinModel: any, offset: number, limit: number) {
+  return Model.findAll({
+    offset: offset,
+    limit: limit,
+    order: [
+      ["id", "DESC"],
+    ],
+    include: [
+      joinModel,
     ],
   }).then((data: object[]) => {
     return data;

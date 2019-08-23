@@ -19,7 +19,7 @@ export function list(req: express.Request, res: express.Response, next: express.
   const offset: number = parseInt(req.query.offset);
   const limit: number = parseInt(req.query.limit);
 
-  db.findAll(models.Post, offset, limit)
+  db.findAllWithJoin(models.Post, models.User, offset, limit)
     .then((data: object[]) => {
       res.send({
         success: true,

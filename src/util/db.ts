@@ -47,3 +47,10 @@ export function findAllWithJoin(Model: any, joinModel: any, offset: number, limi
     throw new Error(err);
   });
 }
+
+export function totalCount(Model: any) {
+  return Model.count()
+    .then((count: number) => {
+      return count;
+    });
+}

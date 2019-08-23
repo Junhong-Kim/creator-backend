@@ -2,7 +2,6 @@ import authRouter from "./routes/auth";
 import postRouter from "./routes/post";
 import userRouter from "./routes/user";
 import youtubeRouter from "./routes/youtube";
-import authMiddleware from "./middlewares/auth";
 import bodyParser from "body-parser";
 import createError from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
@@ -111,7 +110,6 @@ app.get("/", function(req: Request, res: Response, next: NextFunction) {
 });
 app.use("/api/auth", authRouter(passport));
 app.use("/api/youtube", youtubeRouter);
-app.use(authMiddleware);
 app.use("/api/user", userRouter);
 app.use("/api/posts", postRouter);
 

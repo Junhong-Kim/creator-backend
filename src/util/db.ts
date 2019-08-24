@@ -63,3 +63,11 @@ export function totalCount(Model: any) {
       return count;
     });
 }
+
+export function update(Model: any, data: object, condition: object) {
+  return Model.update(data, {
+      where: condition,
+    }).then(async () => {
+      return await findOne(Model, condition);
+    });
+}

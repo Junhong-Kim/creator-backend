@@ -24,16 +24,6 @@ export default function(sequelize: Sequelize, DataTypes: any) {
       allowNull: false,
       defaultValue: 0,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.literal("CURRENT_TIMESTAMP"),
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.literal("CURRENT_TIMESTAMP"),
-    },
     isValid: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -41,6 +31,5 @@ export default function(sequelize: Sequelize, DataTypes: any) {
     },
   }, {
     tableName: "post",
-    timestamps: false,
   });
 }

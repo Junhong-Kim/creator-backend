@@ -45,3 +45,24 @@ export function detail(req: express.Request, res: express.Response, next: expres
     }
   });
 }
+
+export function update(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const data = req.body;
+
+  db.update(models.Post, data, {
+    id: req.params.id,
+  })
+  .then((data: IPost) => {
+    if (data) {
+      res.send({
+        success: true,
+        data,
+      });
+    } else {
+      res.status(400).send({
+        success: false,
+        message: "incorrect request",
+      });
+    }
+  });
+}

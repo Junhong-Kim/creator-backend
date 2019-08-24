@@ -71,3 +71,11 @@ export function update(Model: any, data: object, condition: object) {
       return await findOne(Model, condition);
     });
 }
+
+export function destroy(Model: any, condition: object) {
+  return Model.destroy({
+    where: condition
+  }).then((affectedRows: number) => {
+    return affectedRows === 0 ? false : true;
+  });
+}

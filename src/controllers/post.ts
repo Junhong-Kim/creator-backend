@@ -66,3 +66,12 @@ export function update(req: express.Request, res: express.Response, next: expres
     }
   });
 }
+
+export function destroy(req: express.Request, res: express.Response, next: express.NextFunction) {
+  db.destroy(models.Post, {
+    id: req.params.id,
+  })
+  .then((success: boolean) => {
+    res.send({ success });
+  });
+}

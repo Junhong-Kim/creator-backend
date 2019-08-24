@@ -8,5 +8,6 @@ router.post("/", authMiddleware, postController.create);
 router.get("/", postController.list);
 router.get("/:id", postController.detail);
 router.put("/:id", postController.update);
+router.delete("/:id", postController.destroy);
 
 export default router;

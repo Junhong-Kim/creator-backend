@@ -24,12 +24,9 @@ export default function(sequelize: Sequelize, DataTypes: any) {
       allowNull: false,
       defaultValue: 0,
     },
-    isValid: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
   }, {
     tableName: "post",
+    deletedAt: "deletedAt",
+    paranoid: true
   });
 }

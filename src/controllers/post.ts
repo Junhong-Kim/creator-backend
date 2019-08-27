@@ -1,5 +1,5 @@
 import express from "express";
-import { IPost } from "../interfaces";
+import { IPost, IPostLike } from "../interfaces";
 import models from "../models";
 import * as db from "../util/db";
 
@@ -73,5 +73,42 @@ export function destroy(req: express.Request, res: express.Response, next: expre
   })
   .then((success: boolean) => {
     res.send({ success });
+  });
+}
+
+export function like(req: express.Request, res: express.Response, next: express.NextFunction) {
+  models.PostLike.findOrCreate({
+    where: {
+      userId: req.body.userId,
+      postId: req.params.id,
+    },
+    defaults: {
+      userId: req.body.userId,
+      postId: req.params.id,
+    },
+  }).spread((instance: any, created: boolean) => {
+    if (created) {
+      res.send({
+        success: true,
+        data: instance.dataValues,
+      });
+    } else {
+      db.update(models.PostLike, {
+        isValid: !instance.dataValues.isValid,
+      }, {
+        userId: req.body.userId,
+        postId: req.params.id,
+      }).then((data: IPostLike) => {
+        res.send({
+          success: true,
+          data,
+        });
+      });
+    }
+  }).catch(() => {
+    res.status(404).send({
+      success: false,
+      message: "not found",
+    });
   });
 }

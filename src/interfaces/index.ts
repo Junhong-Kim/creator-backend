@@ -25,3 +25,12 @@ export interface IPost {
   updatedAt: string;
   isValid: boolean;
 }
+
+export interface IPostLike {
+  id: number;
+  isValid: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  postId: number;
+}

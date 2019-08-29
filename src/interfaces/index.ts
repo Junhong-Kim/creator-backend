@@ -19,11 +19,12 @@ export interface IPost {
   id: number;
   title: string;
   contents: string;
-  likeCount: number;
-  dislikeCount: number;
   createdAt: string;
   updatedAt: string;
-  isValid: boolean;
+  deletedAt: boolean;
+  userId: number;
+  user: IUser;
+  [key: string]: any;
 }
 
 export interface IPostLike {

@@ -14,16 +14,6 @@ export default function(sequelize: Sequelize, DataTypes: any) {
     contents: {
       type: DataTypes.TEXT
     },
-    likeCount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    dislikeCount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
   }, {
     tableName: "post",
     deletedAt: "deletedAt",

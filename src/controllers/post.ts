@@ -32,8 +32,10 @@ export function detail(req: express.Request, res: express.Response, next: expres
   db.findOneWithJoin(models.Post, models.User, {
     id: req.params.id,
   })
-  .then((data: IPost) => {
+  .then(async (post: any) => {
+    const data: IPost = post.dataValues;
     if (data) {
+      data.likeCount = await db.totalCount(models.PostLike).then((count: number) => count);
       res.send({
         success: true,
         data,

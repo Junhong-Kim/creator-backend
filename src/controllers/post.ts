@@ -35,10 +35,15 @@ export function detail(req: express.Request, res: express.Response, next: expres
   .then(async (post: any) => {
     const data: IPost = post.dataValues;
     if (data) {
-      data.likeCount = await db.totalCount(models.PostLike).then((count: number) => count);
-      res.send({
-        success: true,
-        data,
+      db.totalCountWithCondition(models.PostLike, {
+        postId: req.params.id,
+        isValid: true,
+      }).then((count: number) => {
+        data.likeCount = count;
+        res.send({
+          success: true,
+          data,
+        });
       });
     } else {
       res.status(404).send({
@@ -75,6 +80,18 @@ export function destroy(req: express.Request, res: express.Response, next: expre
   })
   .then((success: boolean) => {
     res.send({ success });
+  });
+}
+
+export function likeList(req: express.Request, res: express.Response, next: express.NextFunction) {
+  db.findAllWithCondition(models.PostLike, {
+    postId: req.params.id,
+    isValid: true,
+  }).then((data: IPostLike[]) => {
+    res.send({
+      success: true,
+      data,
+    });
   });
 }
 

@@ -9,6 +9,7 @@ router.get("/", postController.list);
 router.get("/:id", postController.detail);
 router.put("/:id", authMiddleware, postController.update);
 router.delete("/:id", authMiddleware, postController.destroy);
+router.get("/:id/like", postController.likeList);
 router.put("/:id/like", postController.like);
 
 export default router;

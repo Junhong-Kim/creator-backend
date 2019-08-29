@@ -40,6 +40,12 @@ export function findAll(Model: any, offset: number, limit: number) {
   });
 }
 
+export function findAllWithCondition(Model: any, condition: object) {
+  return Model.findAll({
+    where: condition,
+  });
+}
+
 export function findAllWithJoin(Model: any, joinModel: any, offset: number, limit: number) {
   return Model.findAll({
     offset: offset,
@@ -62,6 +68,12 @@ export function totalCount(Model: any) {
     .then((count: number) => {
       return count;
     });
+}
+
+export function totalCountWithCondition(Model: any, condition: object) {
+  return Model.count({
+    where: condition,
+  });
 }
 
 export function update(Model: any, data: object, condition: object) {

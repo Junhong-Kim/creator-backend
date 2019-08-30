@@ -4,7 +4,7 @@ import user from "../models/user";
 import userLog from "../models/userLog";
 import post from "../models/post";
 import postLike from "../models/postLike";
-import comment from "../models/comment";
+import postComment from "../models/postComment";
 import config from "../config/config.json";
 const dbConfig = config["development"];
 
@@ -29,7 +29,7 @@ db.User = user(sequelize, Sequelize);
 db.UserLog = userLog(sequelize, Sequelize);
 db.Post = post(sequelize, Sequelize);
 db.PostLike = postLike(sequelize, Sequelize);
-db.Comment = comment(sequelize, Sequelize);
+db.PostComment = postComment(sequelize, Sequelize);
 
 // * define relations
 db.UserLog.belongsTo(db.User, {
@@ -57,13 +57,13 @@ db.PostLike.belongsTo(db.Post, {
   },
   onDelete: "CASCADE",
 });
-db.Comment.belongsTo(db.User, {
+db.PostComment.belongsTo(db.User, {
   foreignKey: {
     allowNull: false,
   },
   onDelete: "CASCADE",
 });
-db.Comment.belongsTo(db.Post, {
+db.PostComment.belongsTo(db.Post, {
   foreignKey: {
     allowNull: false,
   },

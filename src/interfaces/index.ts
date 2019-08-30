@@ -35,3 +35,14 @@ export interface IPostLike {
   userId: number;
   postId: number;
 }
+
+export interface IPostComment {
+  id: number;
+  contents: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: boolean;
+  userId: number;
+  postId: number;
+  user?: IUser;
+}

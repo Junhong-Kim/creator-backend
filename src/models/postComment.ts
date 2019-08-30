@@ -1,18 +1,17 @@
 import { Sequelize } from "sequelize";
 
 export default function(sequelize: Sequelize, DataTypes: any) {
-  return sequelize.define("post_like", {
+  return sequelize.define("post_comment", {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
-    isValid: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
+    contents: {
+      type: DataTypes.TEXT
     },
   }, {
-    tableName: "post_like",
+    tableName: "post_comment",
+    paranoid: true,
   });
 }

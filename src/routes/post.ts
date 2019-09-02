@@ -18,7 +18,7 @@ router.put("/:id/like", postController.like);
 
 // post_comment
 router.post("/:postId/comments", postCommentController.create);
-// router.get("/:postId/comments", postController.commentList);
+router.get("/:postId/comments", postCommentController.list);
 // router.put("/:postId/comments/:commentId", postController.commentUpdate);
 // router.delete("/:postId/comments/:commentId", postController.commentDestroy);
 

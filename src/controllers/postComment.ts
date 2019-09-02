@@ -18,3 +18,19 @@ export function create(req: express.Request, res: express.Response, next: expres
       });
   });
 }
+
+export function list(req: express.Request, res: express.Response, next: express.NextFunction) {
+  models.PostComment.findAll({
+    where: {
+      postId: req.params.postId,
+    },
+    include: [
+      models.User,
+    ],
+  }).then((data: IPostComment[]) => {
+    res.send({
+      success: true,
+      data,
+    });
+  });
+}

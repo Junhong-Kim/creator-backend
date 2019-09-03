@@ -34,3 +34,26 @@ export function list(req: express.Request, res: express.Response, next: express.
     });
   });
 }
+
+export function update(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const data = {
+    contents: req.body.contents,
+  };
+
+  db.update(models.PostComment, data, {
+    postId: req.params.postId,
+    id: req.params.commentId,
+  }).then((data: IPostComment) => {
+    if (data) {
+      res.send({
+        success: true,
+        data,
+      });
+    } else {
+      res.status(400).send({
+        success: false,
+        message: "incorrect request",
+      });
+    }
+  });
+}

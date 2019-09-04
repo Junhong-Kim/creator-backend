@@ -20,6 +20,6 @@ router.put("/:id/like", postController.like);
 router.post("/:postId/comments", postCommentController.create);
 router.get("/:postId/comments", postCommentController.list);
 router.put("/:postId/comments/:commentId", postCommentController.update);
-// router.delete("/:postId/comments/:commentId", postController.commentDestroy);
+router.delete("/:postId/comments/:commentId", postCommentController.destroy);
 
 export default router;

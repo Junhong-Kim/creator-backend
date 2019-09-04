@@ -57,3 +57,12 @@ export function update(req: express.Request, res: express.Response, next: expres
     }
   });
 }
+
+export function destroy(req: express.Request, res: express.Response, next: express.NextFunction) {
+  db.destroy(models.PostComment, {
+    postId: req.params.postId,
+    id: req.params.commentId,
+  }).then((success: boolean) => {
+    res.send({ success });
+  });
+}
